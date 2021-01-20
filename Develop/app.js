@@ -11,7 +11,7 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 let teamMembers = []; 
 function appMenu(){ 
-    function createManager(){
+    function createManager() {
         console.log("Please build your team"); 
         inquirer.prompt([
             {
