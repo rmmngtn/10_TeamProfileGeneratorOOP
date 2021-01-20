@@ -9,6 +9,46 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+let teamMembers = []; 
+function appMenu(){ 
+    function createManager(){
+        console.log("Please build your team"); 
+        inquirer.prompt([
+            {
+                type:"input", 
+                name:"managerName", 
+                message: "What is your manager's name?"
+                //Validate user input
+            },
+            {
+                type:"input", 
+                name:"managerId", 
+                message: "What is your manager's id"
+                //Validate user input
+            },
+            {
+                type:"input", 
+                name:"managerEmail", 
+                message: "What is your manager's email address?"
+                //Validate user input
+            },
+            {
+                type:"input", 
+                name:"managerOfficeNum", 
+                message: "What is your manager's office number?"
+                //Validate user input
+            },
+        ]).then(answers => {
+            const manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerOfficeNumber);
+            console.log(manager);
+
+        });
+    }
+
+
+}
+
+appMenu();
 
 
 // Write code to use inquirer to gather information about the development team members,
