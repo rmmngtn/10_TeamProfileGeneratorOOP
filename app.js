@@ -43,6 +43,39 @@ function appMenu(){
             console.log(manager);
 
         });
+    };  
+    function createEngineer() {
+        console.log("Please build your team"); 
+        inquirer.prompt([
+            {
+                type:"input", 
+                name:"engineerName", 
+                message: "What is your engineer's name?"
+                //Validate user input
+            },
+            {
+                type:"input", 
+                name:"engineerId", 
+                message: "What is your engineer's id"
+                //Validate user input
+            },
+            {
+                type:"input", 
+                name:"engineerEmail", 
+                message: "What is your engineer's email address?"
+                //Validate user input
+            },
+            {
+                type:"input", 
+                name:"engineerGithub", 
+                message: "What is your engineer's Github?"
+                //Validate user input
+            },
+        ]).then(answers => {
+            const engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGithub);
+            console.log(engineer);
+
+        });
     }
 
 
