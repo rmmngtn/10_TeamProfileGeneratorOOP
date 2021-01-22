@@ -75,9 +75,11 @@ function addMembers() {
 
             case "Engineer":
               addEngineer(); 
+              break;
           
             case "Intern":
               addIntern(); 
+              break;
           
             case "No thanks, this is my whole team.":
               renderTeam();
@@ -127,31 +129,31 @@ function addIntern() {
     inquirer.prompt([
         {
             type: "input",
-            name: "engineerName",
-            message: "What is your engineer's name?"
+            name: "internName",
+            message: "What is your intern's name?"
             //Validate user input
         },
         {
             type: "input",
-            name: "engineerId",
-            message: "What is your engineer's id"
+            name: "internId",
+            message: "What is your intern's id"
             //Validate user input
         },
         {
             type: "input",
-            name: "engineerEmail",
-            message: "What is your engineer's email address?"
+            name: "internEmail",
+            message: "What is your intern's email address?"
             //Validate user input
         },
         {
             type: "input",
-            name: "engineerGithub",
-            message: "What is your engineer's Github username?"
+            name: "internSchool",
+            message: "What school is your intern attending?"
             //Validate user input
         }
     ]).then(answers => {
-        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
-        teamMembers.push(engineer);
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+        teamMembers.push(intern);
         renderTeam();
         render(teamMembers);
         console.log(teamMembers);
@@ -168,7 +170,7 @@ function addIntern() {
 renderTeam = () => {
     console.log(teamMembers);
     const html = render(teamMembers);
-    console.log(html);
+    // console.log(html);
     fs.writeFile('team.html', html, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
