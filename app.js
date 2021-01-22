@@ -43,12 +43,12 @@ function appMenu() {
             }
         ]).then(answers => {
             const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNum);
-            console.log(manager);
             teamMembers.push(manager);
             renderTeam();
             render(teamMembers);
-            addMembers();
             console.log(teamMembers);
+            addMembers();
+            
         });
     };
 
@@ -62,18 +62,103 @@ appMenu();
 function addMembers() {
     inquirer.prompt([
         {
-            type: "checkbox", 
+            type: "list", 
             name: "addAMember", 
             message: "Would you like to add any more members?",
             choices: [
                 "Engineer", 
                 "Intern", 
                 "No thanks, this is my whole team."
-            ]
+            ]}    
+    ]).then(data => {
+        switch (data.addAMember) {
+
+            case "Engineer":
+              addEngineer(); 
+          
+            case "Intern":
+              addIntern(); 
+          
+            case "No thanks, this is my whole team.":
+              renderTeam();
             }
-            
-    ])
+    })
 }
+
+function addEngineer() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is your engineer's name?"
+            //Validate user input
+        },
+        {
+            type: "input",
+            name: "engineerId",
+            message: "What is your engineer's id"
+            //Validate user input
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is your engineer's email address?"
+            //Validate user input
+        },
+        {
+            type: "input",
+            name: "engineerGithub",
+            message: "What is your engineer's Github username?"
+            //Validate user input
+        }
+    ]).then(answers => {
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        teamMembers.push(engineer);
+        renderTeam();
+        render(teamMembers);
+        console.log(teamMembers);
+        addMembers();
+        
+    });
+};
+
+
+function addIntern() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "engineerName",
+            message: "What is your engineer's name?"
+            //Validate user input
+        },
+        {
+            type: "input",
+            name: "engineerId",
+            message: "What is your engineer's id"
+            //Validate user input
+        },
+        {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is your engineer's email address?"
+            //Validate user input
+        },
+        {
+            type: "input",
+            name: "engineerGithub",
+            message: "What is your engineer's Github username?"
+            //Validate user input
+        }
+    ]).then(answers => {
+        const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
+        teamMembers.push(engineer);
+        renderTeam();
+        render(teamMembers);
+        console.log(teamMembers);
+        addMembers();
+        
+    });
+};
 
 
 
@@ -84,7 +169,7 @@ renderTeam = () => {
     console.log(teamMembers);
     const html = render(teamMembers);
     console.log(html);
-    fs.writeFile('team.html', html, 'utf8', (err) => {
+    fs.writeFile('team.html', html, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
     });
