@@ -8,16 +8,39 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
+// creates output directory for html file
 fs.mkdir("./output", function(err){ 
     if (err) { 
         console.log(err)
     } else {}
 })
 
+// template builder for team.html
 const render = require("./lib/htmlRenderer");
 let teamMembers = [];
 
 
+// validates prompt answers are entered
+function validAnswer(name) { 
+    return name !== "" || "Please answer the question."; 
+}
+
+// validates that input is an email address
+function validEmail(name) { 
+    var emailRegex = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})*$/;
+    return emailRegex.test(name) || "Please enter a valid email address."; 
+     // returns a boolean 
+}
+
+// validates that number inputs are integers
+function validNumber(name){ 
+    var integerRegex = /^\d+$/; 
+    return integerRegex.test(name) || "Please enter a number."; 
+}
+
+
+
+// kicks off app and starts with manager build 
 function appMenu() {
     function createManager() {
         console.log("Please build your team");
@@ -26,26 +49,26 @@ function appMenu() {
             {
                 type: "input",
                 name: "managerName",
-                message: "What is your manager's name?"
-                //Validate user input
+                message: "What is your manager's name?",
+                validate: validAnswer,
             },
             {
                 type: "input",
                 name: "managerId",
-                message: "What is your manager's id"
-                //Validate user input
+                message: "What is your manager's id",
+                validate: validNumber,
             },
             {
                 type: "input",
                 name: "managerEmail",
-                message: "What is your manager's email address?"
-                //Validate user input
+                message: "What is your manager's email address?",
+                validate: validEmail,
             },
             {
                 type: "input",
                 name: "managerOfficeNum",
-                message: "What is your manager's office number?"
-                //Validate user input
+                message: "What is your manager's office number?",
+                validate: validNumber,
             }
         ]).then(answers => {
             const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNum);
@@ -98,26 +121,26 @@ function addEngineer() {
         {
             type: "input",
             name: "engineerName",
-            message: "What is your engineer's name?"
-            //Validate user input
+            message: "What is your engineer's name?",
+            validate: validAnswer,
         },
         {
             type: "input",
             name: "engineerId",
-            message: "What is your engineer's id"
-            //Validate user input
+            message: "What is your engineer's id",
+            validate: validNumber,
         },
         {
             type: "input",
             name: "engineerEmail",
-            message: "What is your engineer's email address?"
-            //Validate user input
+            message: "What is your engineer's email address?",
+            validate: validEmail,
         },
         {
             type: "input",
             name: "engineerGithub",
-            message: "What is your engineer's Github username?"
-            //Validate user input
+            message: "What is your engineer's Github username?",
+            validate: validAnswer,
         }
     ]).then(answers => {
         const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
@@ -136,26 +159,26 @@ function addIntern() {
         {
             type: "input",
             name: "internName",
-            message: "What is your intern's name?"
-            //Validate user input
+            message: "What is your intern's name?",
+            validate: validAnswer,
         },
         {
             type: "input",
             name: "internId",
-            message: "What is your intern's id"
-            //Validate user input
+            message: "What is your intern's id",
+            validate: validNumber,
         },
         {
             type: "input",
             name: "internEmail",
-            message: "What is your intern's email address?"
-            //Validate user input
+            message: "What is your intern's email address?",
+            validate: validEmail,
         },
         {
             type: "input",
             name: "internSchool",
-            message: "What school is your intern attending?"
-            //Validate user input
+            message: "What school is your intern attending?",
+            validate: validAnswer,
         }
     ]).then(answers => {
         const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
