@@ -8,6 +8,12 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
+fs.mkdir("./output", function(err){ 
+    if (err) { 
+        console.log(err)
+    } else {}
+})
+
 const render = require("./lib/htmlRenderer");
 let teamMembers = [];
 
@@ -164,14 +170,11 @@ function addIntern() {
 
 
 
-
-
-
 renderTeam = () => {
     console.log(teamMembers);
     const html = render(teamMembers);
     // console.log(html);
-    fs.writeFile('team.html', html, (err) => {
+    fs.writeFile('./output/team.html', html, (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
     });
