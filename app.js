@@ -9,60 +9,80 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-let teamMembers = []; 
+let teamMembers = [];
 
 
-function appMenu(){ 
+function appMenu() {
     function createManager() {
-        console.log("Please build your team"); 
+        console.log("Please build your team");
 
         inquirer.prompt([
             {
-                type:"input", 
-                name:"managerName", 
+                type: "input",
+                name: "managerName",
                 message: "What is your manager's name?"
                 //Validate user input
             },
             {
-                type:"input", 
-                name:"managerId", 
+                type: "input",
+                name: "managerId",
                 message: "What is your manager's id"
                 //Validate user input
             },
             {
-                type:"input", 
-                name:"managerEmail", 
+                type: "input",
+                name: "managerEmail",
                 message: "What is your manager's email address?"
                 //Validate user input
             },
             {
-                type:"input", 
-                name:"managerOfficeNum", 
+                type: "input",
+                name: "managerOfficeNum",
                 message: "What is your manager's office number?"
                 //Validate user input
             }
         ]).then(answers => {
             const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNum);
             console.log(manager);
-            teamMembers.push(manager); 
+            teamMembers.push(manager);
             renderTeam();
-            render(teamMembers); 
-
-            console.log(teamMembers); 
-
+            render(teamMembers);
+            addMembers();
+            console.log(teamMembers);
         });
-    };  
-       
-createManager(); 
+    };
 
-
+    createManager();
 }
+
 appMenu();
 
 
-renderTeam = () => { 
-    console.log(teamMembers); 
-    const html = render(teamMembers); 
+
+function addMembers() {
+    inquirer.prompt([
+        {
+            type: "checkbox", 
+            name: "addAMember", 
+            message: "Would you like to add any more members?",
+            choices: [
+                "Engineer", 
+                "Intern", 
+                "No thanks, this is my whole team."
+            ]
+            }
+            
+    ])
+}
+
+
+
+
+
+
+renderTeam = () => {
+    console.log(teamMembers);
+    const html = render(teamMembers);
     console.log(html);
     fs.writeFile('team.html', html, 'utf8', (err) => {
         if (err) throw err;
