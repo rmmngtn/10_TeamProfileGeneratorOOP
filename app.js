@@ -10,9 +10,12 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 let teamMembers = []; 
+
+
 function appMenu(){ 
     function createManager() {
         console.log("Please build your team"); 
+
         inquirer.prompt([
             {
                 type:"input", 
@@ -37,51 +40,38 @@ function appMenu(){
                 name:"managerOfficeNum", 
                 message: "What is your manager's office number?"
                 //Validate user input
-            },
+            }
         ]).then(answers => {
-            const manager = new Manager(answers.managerName, answers.managerID, answers.managerEmail, answers.managerOfficeNumber);
+            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNum);
             console.log(manager);
+            teamMembers.push(manager); 
+            renderTeam();
+            render(teamMembers); 
+
+            console.log(teamMembers); 
 
         });
     };  
-    function createEngineer() {
-        console.log("Please build your team"); 
-        inquirer.prompt([
-            {
-                type:"input", 
-                name:"engineerName", 
-                message: "What is your engineer's name?"
-                //Validate user input
-            },
-            {
-                type:"input", 
-                name:"engineerId", 
-                message: "What is your engineer's id"
-                //Validate user input
-            },
-            {
-                type:"input", 
-                name:"engineerEmail", 
-                message: "What is your engineer's email address?"
-                //Validate user input
-            },
-            {
-                type:"input", 
-                name:"engineerGithub", 
-                message: "What is your engineer's Github?"
-                //Validate user input
-            },
-        ]).then(answers => {
-            const engineer = new Engineer(answers.engineerName, answers.engineerID, answers.engineerEmail, answers.engineerGithub);
-            console.log(engineer);
-
-        });
-    }
+       
+createManager(); 
 
 
 }
-
 appMenu();
+
+
+renderTeam = () => { 
+    console.log(teamMembers); 
+    const html = render(teamMembers); 
+    console.log(html);
+    fs.writeFile('team.html', html, 'utf8', (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+    });
+}
+
+
+
 
 
 // Write code to use inquirer to gather information about the development team members,
